@@ -1,0 +1,48 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Tic Tac Toe</title>
+  </head>
+  <body>
+    <!-- TODO: Add win and loose count for both the players separately-->
+    <main>
+
+      <div class="tracker O">
+        <h1>Player O</h1>
+        
+        <h2>Wins : 0</h2>
+        <h2>Looses : 0</h2>
+        <!-- <h2 class="drawsO">Draws : <span></span></h2> -->
+      </div>
+
+      <div class="game-div">
+        <h1 id="heading">Tic Tac Toe</h1>
+      <div class="container">
+        <div class="game">
+          <span><button class="box"></button></span>
+          <span><button class="box"></button></span>
+          <span><button class="box"></button></span>
+          <span><button class="box"></button></span>
+          <span><button class="box"></button></span>
+          <span><button class="box"></button></span>
+          <span><button class="box"></button></span>
+          <span><button class="box"></button></span>
+          <span><button class="box"></button></span>
+        </div>
+      </div>
+      <button class="btn" id="reset" type="reset">Reset</button>
+      <button class="btn hide" id="newGame" type="button">New Game</button>
+      </div>
+
+      <div class="tracker X">
+        <h1>Player X</h1>
+        <h2 class="winsX">Wins : <span>0</span></h2>
+        <h2 class="loosesX">Looses : <span>0</span></h2>
+        <!-- <h2 class="drawsX">Draws : <span></span></h2> -->
+      </div>
+    </main>
+    <script src="script.js"></script>
+  </body>
+</html>
