@@ -4,17 +4,17 @@ const newGameBtn = document.querySelector("#newGame");
 const heading = document.querySelector("#heading");
 const buttons = document.querySelectorAll(".btn");
 
-// tracking no of wins, looses and draws for bpth the players 
+// Tracking number of wins, losses, and draws for both players
 const trackO = document.querySelector(".O");
 const trackX = document.querySelector(".X");
 
-// for draw
+// For draw
 let count = 0;
 
-// playerO and playerX
+// PlayerO and playerX
 let turnO = true;
 
-// to track win count
+// To track win count
 let winO = 0;
 let winX = 0;
 
@@ -29,77 +29,79 @@ const winPatterns = [
   [6, 7, 8],
 ];
 
-// box click function
+// Box click function
 boxes.forEach((box) => {
   box.addEventListener("click", () => {
-    if (turnO == true) {
-      box.style.color = "#90D26D";
-      box.textContent = "O";
-      turnO = false;
-      heading.innerText = "X Player turn";
+    if (box.textContent === "") { // Check if the box is empty
+      if (turnO) {
+        box.style.color = "#90D26D";
+        box.textContent = "O";
+        heading.innerText = "X Player turn";
+      } else {
+        box.style.color = "#2C7865";
+        box.textContent = "X";
+        heading.innerText = "O Player turn";
+      }
+      turnO = !turnO;
       count++;
-    } else{
-      box.style.color = "#2C7865";
-      box.textContent = "X";
-      turnO = true;
-      heading.innerText = "O Player turn";
-      count++;
+      checkWinner();
+      checkDraw();
     }
-    box.disabled = true;
-    checkWinner();
-    checkDraw();
   });
 });
 
 const checkDraw = () => {
-    if (count == 9){
-        heading.innerText = "Its a Draw";
-    }
-} 
-
-const checkWinner = () => {
-  winPatterns.forEach((arr) => {
-    let val1 = boxes[arr[0]].innerText;
-    let val2 = boxes[arr[1]].innerText;
-    let val3 = boxes[arr[2]].innerText;
-
-// checking win or not
-    if (val1 != "" && val2 != "" && val3 != "") {
-      if (val1 == val2 && val2 == val3) {
-        heading.innerText = "winner is  player " + val1;
-        boxes.forEach((box) => {
-          box
-        })
-        newGameBtn.classList.remove("hide");
-        resetBtn.classList.add("hide");
-
-        // to update the win and loose count
-        if(val1 == "O"){
-          winO++;
-          trackO.children[1].innerHTML = "Wins : " + winO; 
-          trackX.children[2].innerHTML = "looses : " + winO; 
-        }else if (val1 == "X"){
-          winX++;
-          trackX.children[1].innerHTML = "Wins : " + winX;
-          trackO.children[2].innerHTML = "looses : " + winX; 
-        }
-      }
-    }
-  });
+  if (count === 9) {
+    heading.innerText = "It's a Draw";
+    newGameBtn.classList.remove("hide");
+    resetBtn.classList.add("hide");
+  }
 };
 
-// reset button and new game button funtions
-buttons.forEach((btn) => {
-  btn.addEventListener("click", () => {
-    for (let i = 0; i < boxes.length; i++) {
-      boxes[i].innerText = "";
-      boxes[i].disabled = false;
-      heading.innerText = "Tic Tac Toe";
+const checkWinner = () => {
+  for (const arr of winPatterns) {
+    const [a, b, c] = arr;
+    const val1 = boxes[a].textContent;
+    const val2 = boxes[b].textContent;
+    const val3 = boxes[c].textContent;
+
+    // Checking win or not
+    if (val1 !== "" && val1 === val2 && val2 === val3) {
+      heading.innerText = `Winner is Player ${val1}`;
+      newGameBtn.classList.remove("hide");
+      resetBtn.classList.add("hide");
+
+      // To update the win and loss count
+      if (val1 === "O") {
+        winO++;
+        trackO.children[1].innerHTML = `Wins: ${winO}`;
+        trackX.children[2].innerHTML = `Losses: ${winO}`;
+      } else if (val1 === "X") {
+        winX++;
+        trackX.children[1].innerHTML = `Wins: ${winX}`;
+        trackO.children[2].innerHTML = `Losses: ${winX}`;
+      }
+      return; // Exit the function after a win is found
     }
+  }
+};
+
+const resetGame = () => {
+  boxes.forEach((box) => {
+    box.textContent = "";
+    box.disabled = false;
+    box.style.color = ""; // Reset box color
   });
-});
+  heading.innerText = "Tic Tac Toe";
+  count = 0;
+  turnO = true;
+  newGameBtn.classList.add("hide");
+  resetBtn.classList.remove("hide");
+};
 
+const newGame = () => {
+  resetGame();
+};
 
-
-
-
+resetBtn.addEventListener("click", resetGame);
+newGameBtn.addEventListener("click", newGame);
