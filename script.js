@@ -2,16 +2,11 @@ const boxes = document.querySelectorAll(".box");
 const resetBtn = document.querySelector("#reset");
 const newGameBtn = document.querySelector("#newGame");
 const heading = document.querySelector("#heading");
-const buttons = document.querySelectorAll(".btn");
-
-// Tracking number of wins, losses, and draws for both players
 const trackO = document.querySelector(".O");
 const trackX = document.querySelector(".X");
 
-// For draw
+// For draw and turn tracking
 let count = 0;
-
-// PlayerO and playerX
 let turnO = true;
 
 // To track win count
@@ -36,11 +31,11 @@ boxes.forEach((box) => {
       if (turnO) {
         box.style.color = "#90D26D";
         box.textContent = "O";
-        heading.innerText = "X Player turn";
+        heading.innerText = "X Player's turn";
       } else {
         box.style.color = "#2C7865";
         box.textContent = "X";
-        heading.innerText = "O Player turn";
+        heading.innerText = "O Player's turn";
       }
       turnO = !turnO;
       count++;
@@ -71,7 +66,7 @@ const checkWinner = () => {
       newGameBtn.classList.remove("hide");
       resetBtn.classList.add("hide");
 
-      // To update the win and loss count
+      // Update win and loss count
       if (val1 === "O") {
         winO++;
         trackO.children[1].innerHTML = `Wins: ${winO}`;
@@ -81,7 +76,7 @@ const checkWinner = () => {
         trackX.children[1].innerHTML = `Wins: ${winX}`;
         trackO.children[2].innerHTML = `Losses: ${winX}`;
       }
-      return; // Exit the function after a win is found
+      return; // Exit after declaring a winner
     }
   }
 };
@@ -89,7 +84,6 @@ const checkWinner = () => {
 const resetGame = () => {
   boxes.forEach((box) => {
     box.textContent = "";
-    box.disabled = false;
     box.style.color = ""; // Reset box color
   });
   heading.innerText = "Tic Tac Toe";
@@ -103,5 +97,6 @@ const newGame = () => {
   resetGame();
 };
 
+// Attach event listeners
 resetBtn.addEventListener("click", resetGame);
 newGameBtn.addEventListener("click", newGame);
